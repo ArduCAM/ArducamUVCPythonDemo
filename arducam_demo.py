@@ -24,6 +24,7 @@ if __name__ == "__main__":
     parser.add_argument('-t', '--reStartTimes', type=int, required=False, default=5, help="restart camera times")
     parser.add_argument('--ccm', action='store_true', required=False, help="add color correction")
     parser.add_argument('--tuning-file', type=str, required=False, help="tuning file path")
+    parser.add_argument('--wait-frames', type=int, required=False, default=5, help="Wait a few frames to save 108mp image")
 
     args = parser.parse_args()
     width = args.width
@@ -37,6 +38,7 @@ if __name__ == "__main__":
     ccm = args.ccm
     tuning_file_path = args.tuning_file
     selector = selector_list[args.VideoCaptureAPI]
+    wait_frames = args.wait_frames
 
 
     cap = Camera(index, selector)
@@ -66,8 +68,6 @@ if __name__ == "__main__":
     if not output_path:
         output_path = f"{width}x{height}.jpg"
 
-    time_start = time.monotonic()
-    flag = True
     while True:
         ret, frame = cap.read()
 
@@ -106,12 +106,15 @@ if __name__ == "__main__":
             cap.reStart()
             cap.set(cv2.CAP_PROP_CONVERT_RGB, 0)
 
-            for i in range(2):
+            for i in range(wait_frames):
                 print(f"wait {i + 1}")
                 ret, frame = cap.read()
-            frame = arducam108mp_isp(frame.reshape(9000, 12000), ccm, ccm_list)
-            cv2.imwrite(f"108MP.jpg", frame)
-            print("save success")
+            if ret:
+                frame = arducam108mp_isp(frame.reshape(9000, 12000), ccm, ccm_list)
+                cv2.imwrite(f"108MP_{time.strftime('%Y-%m-%d') + time.strftime('_%H_%M_%S')}.jpg", frame)
+                print("save success")
+            else:
+                print("none frame, save failed")
 
             cap.set_width(width)
             cap.set_height(height)
