@@ -64,9 +64,6 @@ if __name__ == "__main__":
     if tuning_file_path:
         tuning_file = json.load(open(tuning_file_path, "r"))
         ccm_list = tuning_file["ccms"]
-    
-    if not output_path:
-        output_path = f"{width}x{height}.jpg"
 
     while True:
         ret, frame = cap.read()
@@ -93,13 +90,16 @@ if __name__ == "__main__":
 
         display_fps(frame)
         cv2.imshow("video", frame)
-
+        
+        time_str = time.strftime('%Y-%m-%d') + time.strftime('_%H_%M_%S')
         key = cv2.waitKey(1)                                            
         if key == ord("q"):
             break
         elif key == ord("s"):
+            if not output_path:
+                output_path = f"{width}x{height}_{time_str}.jpg"
             cv2.imwrite(f"{output_path}", frame)
-            print("save success")
+            print(f"save success, file name: {output_path}")
         elif key == ord("a"):
             cap.set_width(6000)
             cap.set_height(9000)
@@ -111,8 +111,9 @@ if __name__ == "__main__":
                 ret, frame = cap.read()
             if ret:
                 frame = arducam108mp_isp(frame.reshape(9000, 12000), ccm, ccm_list)
-                cv2.imwrite(f"108MP_{time.strftime('%Y-%m-%d') + time.strftime('_%H_%M_%S')}.jpg", frame)
-                print("save success")
+                file_name = f"108MP_{time_str}.jpg"
+                cv2.imwrite(file_name, frame)
+                print(f"save success, file name: {file_name}")
             else:
                 print("none frame, save failed")
 
