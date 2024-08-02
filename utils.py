@@ -7,12 +7,14 @@ selector_list = [
     cv2.CAP_ANY,
     cv2.CAP_MSMF,
     cv2.CAP_DSHOW,
+    cv2.CAP_V4L2
 ]
 
 VideoCaptureAPIs = """opencv VideoCaptureAPIs
 0: cv2.CAP_ANY
 1: cv2.CAP_MSMF
-2: cv2.CAP_DSHOW"""
+2: cv2.CAP_DSHOW
+3: cv2.CAP_V4L2"""
 
 def display_fps(frame):
     display_fps.frame_count += 1
