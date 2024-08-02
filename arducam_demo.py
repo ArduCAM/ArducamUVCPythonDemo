@@ -15,7 +15,6 @@ if __name__ == "__main__":
     parser.add_argument('-F', '--Focus', action='store_true', required=False, help='Add focus control on the display interface')
     parser.add_argument('-i', '--index', type=int, required=False, default=0, help='set camera index')
     parser.add_argument('-v', '--VideoCaptureAPI', type=int, required=False, default=0, choices=range(0, len(selector_list)), help=VideoCaptureAPIs)
-    parser.add_argument('-o', '--OutputPath', type=str, required=False, default="test.jpg", help="set save image path")
     parser.add_argument('-t', '--reStartTimes', type=int, required=False, default=5, help="restart camera times")
 
     args = parser.parse_args()
@@ -25,7 +24,6 @@ if __name__ == "__main__":
     index = args.index
     fps = args.FrameRate
     focus = args.Focus
-    output_path = args.OutputPath
     restart_times = args.reStartTimes
     selector = selector_list[args.VideoCaptureAPI]
 
@@ -72,6 +70,8 @@ if __name__ == "__main__":
         if key == ord("q"):
             break
         elif key == ord("s"):
+            time_str = time.strftime('%Y-%m-%d') + time.strftime('_%H_%M_%S')
+            output_path = f"{width}x{height}_{time_str}.jpg"
             cv2.imwrite(f"{output_path}", frame)
 
     cap.release()
