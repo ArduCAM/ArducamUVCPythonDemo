@@ -16,6 +16,21 @@ VideoCaptureAPIs = """opencv VideoCaptureAPIs
 2: cv2.CAP_DSHOW
 3: cv2.CAP_V4L2"""
 
+color_order_list = [
+    cv2.COLOR_BayerBG2BGR,
+    cv2.COLOR_BayerGB2BGR,
+    cv2.COLOR_BayerRG2BGR,
+    cv2.COLOR_BayerGR2BGR,
+]
+
+opencv_color_order_api = """opencv color order 
+0: cv2.COLOR_BayerBG2BGR
+1: cv2.COLOR_BayerGB2BGR
+2: cv2.COLOR_BayerRG2BGR
+3: cv2.COLOR_BayerGR2BGR
+"""
+
+
 def display_fps(frame):
     display_fps.frame_count += 1
 
