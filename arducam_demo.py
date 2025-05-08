@@ -2,8 +2,8 @@ import cv2
 import argparse
 
 import numpy as np
-from camera import Camera
-from utils import *
+from utils.camera import Camera
+from utils.utils import *
 import json
 from rich import print
 
@@ -20,8 +20,6 @@ if __name__ == "__main__":
     parser.add_argument('-i', '--index', type=int, required=False, default=0, help='set camera index')
     parser.add_argument('-v', '--VideoCaptureAPI', type=int, required=False, default=0, choices=range(0, len(selector_list)), help=VideoCaptureAPIs)
     parser.add_argument('-t', '--reStartTimes', type=int, required=False, default=5, help="restart camera times")
-    parser.add_argument('--ccm', action='store_true', required=False, help="add color correction")
-    parser.add_argument('--tuning-file', type=str, required=False, help="tuning file path")
     parser.add_argument('--wait-frames', type=int, required=False, default=5, help="Wait a few frames to save 200mp image")
 
     args = parser.parse_args()
@@ -53,11 +51,6 @@ if __name__ == "__main__":
     
     if focus:
         cv2.createTrackbar('Focus', 'video', 187, 4095, cap.set_focus)
-
-    ccm_list = []
-    if tuning_file_path:
-        tuning_file = json.load(open(tuning_file_path, "r"))
-        ccm_list = tuning_file["ccms"]
 
     while True:
         ret, frame = cap.read()
@@ -101,7 +94,7 @@ if __name__ == "__main__":
                 ret, frame = cap.read()
             if ret:
                 time_str = time.strftime('%Y-%m-%d') + time.strftime('_%H_%M_%S')
-                file_name = f"200MP_{time_str}.RAW"
+                file_name = f"200MP_{time_str}.raw"
                 np.array(frame).tofile(file_name)
                 print(f"save success, file name: {file_name}")
             else:

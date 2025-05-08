@@ -2,8 +2,7 @@ import argparse
 import numpy as np
 import cv2
 import os
-from arducam_200mp_convert_lib import convert_200mp
-from utils import *
+from utils.utils import *
 
 
 if __name__ == "__main__":
@@ -16,7 +15,7 @@ if __name__ == "__main__":
     filepath = args.filepath
     batch = args.batch
     color_order = color_order_list[args.color_order]
-    if not filepath.endswith(".RAW") and not batch:
+    if not filepath.endswith(".raw") and not batch:
         raise ValueError("if -b/--batch option is not set, -f/--filepath should be a 200mp raw image file path")
 
     if batch:
@@ -25,7 +24,7 @@ if __name__ == "__main__":
             os.makedirs(output_dir)
         for root, dirs, files in os.walk(filepath):
             for file in files:
-                if file.endswith(".RAW"):
+                if file.endswith(".raw"):
                     data = np.fromfile(os.path.join(root, file), dtype=np.uint8)
                     color = convert_200mp(data, color_order)
                     filename = os.path.basename(file).split(".")[0]
