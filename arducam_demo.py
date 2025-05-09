@@ -21,6 +21,7 @@ if __name__ == "__main__":
     parser.add_argument('--VideoCaptureAPI', type=int, required=False, default=0, choices=range(0, len(selector_list)), help=VideoCaptureAPIs)
     parser.add_argument('--reStartTimes', type=int, required=False, default=5, help="restart camera times")
     parser.add_argument('--wait-frames', type=int, required=False, default=1, help="Wait a few frames to save 200mp image")
+    parser.add_argument('--read-eeprom', action='store_true', required=False, help="read eeprom data")
 
     args = parser.parse_args()
     width = args.width
@@ -32,6 +33,7 @@ if __name__ == "__main__":
     restart_times = args.reStartTimes
     selector = selector_list[args.VideoCaptureAPI]
     wait_frames = args.wait_frames
+    read_eeprom = args.read_eeprom
 
     if width > 8160 or height >= 6144:
         raise ValueError("cannot set resolution larger than 8160x6144")
@@ -89,13 +91,13 @@ if __name__ == "__main__":
             cv2.imwrite(f"{output_path}", frame)
             print(f"save success, file name: {output_path}")
         elif key == ord("a"):
-            inf_eeprom_data_path = "inf_eeprom.dat"
-            mac_eeprom_data_path = "mac_eeprom.dat"
-            eeprom_data_len = 4608
-
-            camera_xu.open(camera_names[index])
-            camera_xu.read_eeprom(inf_eeprom_data_path, mac_eeprom_data_path, eeprom_data_len)
-            camera_xu.close()
+            if read_eeprom:
+                inf_eeprom_data_path = "inf_eeprom.dat"
+                mac_eeprom_data_path = "mac_eeprom.dat"
+                eeprom_data_len = 4608
+                camera_xu.open(camera_names[index])
+                camera_xu.read_eeprom(inf_eeprom_data_path, mac_eeprom_data_path, eeprom_data_len)
+                camera_xu.close()
             
             cap.set_width(16320)
             cap.set_height(6144)
