@@ -1,4 +1,3 @@
 numpy
 opencv_python
 rich
-arducam_200mp_convert_lib

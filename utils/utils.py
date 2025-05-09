@@ -17,8 +17,8 @@ VideoCaptureAPIs = """opencv VideoCaptureAPIs
 3: cv2.CAP_V4L2"""
 
 color_order_list = [
-    cv2.COLOR_BayerBG2BGR,
     cv2.COLOR_BayerGB2BGR,
+    cv2.COLOR_BayerBG2BGR,
     cv2.COLOR_BayerRG2BGR,
     cv2.COLOR_BayerGR2BGR,
 ]

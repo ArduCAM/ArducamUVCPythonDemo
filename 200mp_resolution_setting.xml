@@ -1,0 +1,7 @@
+<?xml version="2.1"?>
+<root>
+  <input_type>0</input_type>
+  <sensor_type>5</sensor_type>
+  <xtc_eeprom_size>4608</xtc_eeprom_size>
+  <xtc_eeprom_size2>4608</xtc_eeprom_size2>
+</root>
