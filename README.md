@@ -8,10 +8,10 @@ If you are using a windows system, it is recommended to set the -v parameter to 
 
 Type "a" on the keyboard to save a 200MP RAW image
 ```shell
-python arducam_demo.py -W 1280 -H 720 --Focus 346 -i 0
+python arducam_demo.py -W 1280 -H 720 --Focus 346 -i 0 --wait-frames 2 --read-eeprom
 ```
 
-## Convert 200MP Image
+## Convert 200MP Image (Only for Windows11/10)
 
 ```shell
 python arducam_200mp_convert.py -f <raw image path>
