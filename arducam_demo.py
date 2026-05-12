@@ -42,9 +42,11 @@ if __name__ == "__main__":
     
     if focus:
         cv2.createTrackbar('Focus', 'video', 187, 1023, cap.set_focus)
+        
     
     while True:
         ret, frame = cap.read()
+        cap.set_focus(cap.get_focus())
 
         if not ret:
             if restart_times != 0:
